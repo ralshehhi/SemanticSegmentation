@@ -9,16 +9,11 @@ config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 tf.Session(config = config)
 
-#num_samples = 803
-#dim = 2448
 norm_method = sys.argv[1]
 model = sys.argv[2]
 
-path = '/scratch/ra130/Projects/DeepGlobe/Data2'
-data_path = path + '/Data/train'
-
-#X_path = data_path + '/**_sat.jpg'
-#y_path = data_path + '/**_mask.png'
+path = './Projects/DeepGlobe/'
+data_path = path + 'Data/train'
 X_path = data_path + '/**.tiff'
 y_path = data_path + '/**.png'
 
@@ -40,8 +35,6 @@ train_batch = get_miniBatch(list_X_y, norm_method)
 print('Building Networks')
 generator = Generator(ISIZE=512, NC_IN=source_dimz, NC_OUT=target_dimz)
 discriminator= Discriminator(ISIZE=512, NC_IN=source_dimz, NC_OUT=target_dimz)
-#print('D:', discriminator.summary())
-#print('G:', generator.summary())
 
 X_real = generator.input
 y_fake = generator.output
@@ -79,9 +72,6 @@ sum_error_disc_fake = 0
 num_epoches = 200
 num_checkpoints = 10
 
-#epoch_index = 1000
-#model_name =  model_path + 'epoch' + str(epoch_index) + '.h5'
-#generator = load_model(model_name)
 print('Training')
 while index <= num_epoches:
 	t0 = time.time()
